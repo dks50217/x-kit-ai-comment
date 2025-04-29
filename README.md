@@ -1,21 +1,27 @@
 # x-kit
 
-一个用于抓取和分析 X (Twitter) 用户数据和推文的工具。
+一個用於抓取和分析 X (Twitter) 用戶數據和推文的工具，評論用戶推文
+
+* This is a modified version of [xiaoxiunique/x-kit](https://github.com/xiaoxiunique/x-kit).  
+* Forked and updated by [x-kit-ai-comment](https://github.com/dks50217/x-kit-ai-comment).  
+* Licensed under the original MIT License. See [LICENSE](./LICENSE) for details.
 
 ![x-kit](./images/action-stats.png)
-## 功能特点
 
-- 自动抓取指定用户的基本信息和推文
-- 定时更新用户时间线数据
-- 支持数据本地化存储
-- GitHub Actions 自动化部署
+## 功能特點
 
-## 更新日志
+- 自動抓取指定用戶的基本資訊和推文
+- 定時更新用戶時間線數據
+- 支援數據本地化存儲
+- GitHub Actions 自動化部署
 
-- 2024-12-24 添加每日发布推文功能 `post-twitter-daily.yml` `post-tweet.ts`
-- 2025-01-02 添加获取用户推文功能 `fetch-user-tweets.ts`
+## 更新日誌
 
-## 安装
+- 2024-12-24 添加每日發布推文功能 `post-twitter-daily.yml` `post-tweet.ts`
+- 2025-01-02 添加獲取用戶推文功能 `fetch-user-tweets.ts`
+- 2025-04-29 新增評論用戶推文功能 `tweets-comment.ts`
+
+## 安裝
 
 ```bash
 bun install
@@ -23,60 +29,63 @@ bun install
 
 ## 使用方法
 
-### 1. 配置环境变量
+### 1. 配置環境變數
 
-在项目根目录创建 `.env` 文件,添加以下配置:
+在專案根目錄建立 `.env` 文件，添加以下配置：
 
 ```bash
-AUTH_TOKEN=你的X认证Token
-GET_ID_X_TOKEN=用于获取用户ID的Token
+AUTH_TOKEN=你的X認證Token
+GET_ID_X_TOKEN=用於獲取用戶ID的Token
+AI_API_KEY=GitHub Models的API Key
+AI_MODEL=模型，如:openai/gpt-4.1
+AI_ENDPOINT=https://models.github.ai/inference
 ```
 
-### 2. 添加需要追踪的用户
+### 2. 添加需要追蹤的用戶
 
-在 `dev-accounts.json` 中添加用户信息:
+在 `dev-accounts.json` 中添加用戶資訊：
 
 ```json
 {
-  "username": "用户名",
-  "twitter_url": "用户主页链接", 
-  "description": "用户描述",
-  "tags": ["标签1", "标签2"]
+  "username": "用戶名",
+  "twitter_url": "用戶主頁鏈接", 
+  "description": "用戶描述",
+  "tags": ["標籤1", "標籤2"]
 }
 ```
 
-### 3. 运行脚本
+### 3. 運行腳本
 
 ```bash
-# 获取用户信息
+# 獲取用戶資訊
 bun run scripts/index.ts
 
-# 获取最新推文
+# 獲取最新推文
 bun run scripts/fetch-tweets.ts
 
-# 批量关注用户
+# 批量關注用戶
 bun run scripts/batch-follow.ts
 ```
 
-## 自动化部署
+## 自動化部署
 
-项目使用 GitHub Actions 实现自动化:
+專案使用 GitHub Actions 實現自動化：
 
-- `get-home-latest-timeline.yml`: 每30分钟获取一次最新推文
-- `daily-get-tweet-id.yml`: 每天获取一次用户信息
+- `get-home-latest-timeline.yml`: 每30分鐘獲取一次最新推文
+- `daily-get-tweet-id.yml`: 每天獲取一次用戶資訊
 
-## 数据存储
+## 數據存儲
 
-- 用户信息保存在 `accounts/` 目录
-- 推文数据保存在 `tweets/` 目录,按日期命名
+- 用戶資訊保存在 `accounts/` 目錄
+- 推文數據保存在 `tweets/` 目錄，按日期命名
 
-## 技术栈
+## 技術棧
 
 - Bun
 - TypeScript 
 - Twitter API
 - GitHub Actions
 
-## License
+## 授權
 
 MIT

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latest Tweet</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+    header {
+      background: #0078d7;
+      color: #fff;
+      padding: 1rem 0;
+      text-align: center;
+    }
+    #tweet {
+      background: #fff;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+    }
+    #impact {
+      background: #e8f5e9;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+    }
+    strong {
+      color: #0078d7;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Trump Latest Tweet</h1>
+  </header>
+  <div id="tweet">
+    <p>Loading...</p>
+  </div>
+  <div id="impact">
+    <h2>Economic Impact</h2>
+    <p id="impact-text">Analyzing the economic impact of this tweet...</p>
+  </div>
+  <script>
+    async function loadLatestTweet() {
+      try {
+
+        const response = await fetch('./tweets/realDonaldTrump.json');
+        const response_comment = await fetch('./tweets/realDonaldTrump_comment.json');
+        const tweets = await response.json();
+        const comments = await response_comment.json();
+
+        if (tweets.length > 0) {
+          const latestTweet = tweets[0];
+          const tweetDiv = document.getElementById('tweet');
+          tweetDiv.innerHTML = `
+            <p><strong>User:</strong> ${latestTweet.user}</p>
+            <p><strong>Text:</strong> ${latestTweet.fullText}</p>
+            <p><strong>Time:</strong> ${latestTweet.time}</p>
+          `;
+
+          document.getElementById('impact-text').innerText = comments.comment;
+
+        } else {
+          document.getElementById('tweet').innerText = 'No tweets found.';
+        }
+      } catch (error) {
+        console.error('Error loading tweet:', error);
+        document.getElementById('tweet').innerText = 'Failed to load tweet.';
+        document.getElementById('impact-text').innerText = 'Failed to analyze economic impact.';
+      }
+    }
+
+    loadLatestTweet();
+  </script>
+</body>
+</html>
